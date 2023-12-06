@@ -2,7 +2,7 @@ open Myutils
 
 
 (** parsing input *)
-let rec get_maps lines =
+let  get_maps lines =
   let rec aux (acc : string list list) = function
     | [] -> List.rev acc
    | line::rest ->
