@@ -12,6 +12,10 @@ let print_int_pairs pairs =
   let () = List.iter (fun (x) -> Printf.printf "(%d,%d) " (fst x) (snd x)) pairs in 
   Printf.printf "\n"
 
+
+let rec gcd a (b:int) = if a == 0 then b else gcd (b mod a) a
+let lcm a b = a * b / (gcd a b)
+
 module Range = struct
   type t = int * int
 
