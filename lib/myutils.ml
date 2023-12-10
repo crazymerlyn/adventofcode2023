@@ -3,6 +3,7 @@ let parse_numbers string = string
   |> List.filter (fun (part) -> String.length part > 0)
   |> List.map int_of_string
 
+let print_pair (x,y) = Printf.printf "(%d, %d)" x y
 let print_lines = List.iter print_endline
 let print_ints ints = let () = List.iter (fun (x) -> Printf.printf "%d, " x) ints in
   Printf.printf "\n"
