@@ -17,6 +17,19 @@ let print_int_pairs pairs =
 let rec gcd a (b:int) = if a == 0 then b else gcd (b mod a) a
 let lcm a b = a * b / (gcd a b)
 
+let memo_rec f ?(cachesize=100) =
+  let m = Hashtbl.create cachesize in
+  let rec g x =
+    try
+      Hashtbl.find m x
+    with
+    Not_found ->
+      let y = f g x in
+        Hashtbl.add m x y ;
+        y
+  in
+    g
+
 module Range = struct
   type t = int * int
 
