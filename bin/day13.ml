@@ -6,13 +6,13 @@ let grids = getgroups lines
 let diff1 a b = (List.map2 (fun x y -> if x != y then 1 else 0) a b |> List.fold_left (+) 0) == 1
 
 let rec part_equal a b = match a,b with
-| [], b -> true
-| a, [] -> true
+| [], _ -> true
+| _, [] -> true
 | x::resta, y::restb -> List.equal (==) x y && part_equal resta restb
 
 let rec smudge_equal a b = match a,b with
-| [], b -> false
-| a, [] -> false
+| [], _ -> false
+| _, [] -> false
 | x::resta, y::restb -> diff1 x y && part_equal resta restb
                       || List.equal (==) x y && smudge_equal resta restb
 
