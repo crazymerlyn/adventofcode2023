@@ -3,6 +3,17 @@ let parse_numbers string = string
   |> List.filter (fun (part) -> String.length part > 0)
   |> List.map int_of_string
 
+let getgroups lines = 
+  let rec aux lines result = match lines with
+  | [] -> result
+  | []::rest -> aux rest ([]::result)
+  | x::rest -> aux rest ((x::(List.hd result)) :: (List.tl result))
+  in 
+  aux lines [[]] 
+  |> List.map List.rev 
+  |> List.rev 
+  |> List.filter (Fun.negate List.is_empty)
+
 let print_pair (x,y) = Printf.printf "(%d, %d)" x y
 let print_lines = List.iter print_endline
 let print_ints ints = let () = List.iter (fun (x) -> Printf.printf "%d, " x) ints in
