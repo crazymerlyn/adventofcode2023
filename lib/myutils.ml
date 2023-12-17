@@ -52,3 +52,17 @@ module Range = struct
     let right = min y b in
     make left (max left right)
 end
+
+module Coordinate = struct
+  type t = int * int
+  let equal (i1,j1) (i2, j2) = i1 == i2 && j1 == j2
+
+  let add (i1,j1) (i2, j2) = (i1+i2, j1+j2)
+end
+
+module Grid = struct
+  type 'a t = 'a array array
+
+  let mem t (j, i) = 0 <= i && i < Array.length t && 0 <= j && j < Array.length t.(i)
+  let get t (j, i) = if mem t (j,i) then Some (t.(i).(j)) else None
+end
