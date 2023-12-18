@@ -53,11 +53,20 @@ module Range = struct
     make left (max left right)
 end
 
+type dir = R | L | U | D [@@deriving show]
 module Coordinate = struct
-  type t = int * int
+  type t = int * int [@@deriving show]
   let equal (i1,j1) (i2, j2) = i1 == i2 && j1 == j2
 
   let add (i1,j1) (i2, j2) = (i1+i2, j1+j2)
+
+  let from : dir -> t = function
+  | R -> (0, 1)
+  | L -> (0, -1)
+  | U -> (-1, 0)
+  | D -> (1, 0)
+
+  let mul (i, j) k = (i*k, j*k)
 end
 
 module Grid = struct

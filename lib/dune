@@ -1,2 +1,4 @@
 (library
- (name myutils))
+ (name myutils)
+ (preprocess (pps ppx_deriving.show ppx_deriving.eq))
+ )
