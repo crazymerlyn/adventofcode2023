@@ -59,6 +59,8 @@ module Coordinate = struct
   let equal (i1,j1) (i2, j2) = i1 == i2 && j1 == j2
 
   let add (i1,j1) (i2, j2) = (i1+i2, j1+j2)
+  let compare (i1,j1) (i2,j2) =
+    if i1 < i2 then -1 else if i1 > i2 then 1 else (compare j1 j2)
 
   let from : dir -> t = function
   | R -> (0, 1)
@@ -68,6 +70,8 @@ module Coordinate = struct
 
   let mul (i, j) k = (i*k, j*k)
 end
+
+module CS = Set.Make(Coordinate)
 
 module Grid = struct
   type 'a t = 'a array array
