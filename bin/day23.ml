@@ -31,8 +31,8 @@ let compress grid adj =
   let find_adj_intersections v = 
     let rec aux q seen dist result =
       if List.is_empty q then result else
-      let alladj = Core.List.(q >>= adj |> filter ~f:(fun k -> not (CS.mem k seen))) in
       let aux2 q =
+        let alladj = Core.List.(q >>= adj |> filter ~f:(fun k -> not (CS.mem k seen))) in
         List.fold_left 
         (fun (q,s,r) a ->
           if List.mem a vs then (q, CS.add a s, (dist,a)::r)

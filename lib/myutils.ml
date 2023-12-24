@@ -89,7 +89,7 @@ type 'a vertex = {
   mutable neighbours: 'a vertex list;
 }
 
-let rec get_vertices edges vertices = 
+let get_vertices edges vertices = 
   let h = List.map 
   (fun v -> 
     v,{id = v;
