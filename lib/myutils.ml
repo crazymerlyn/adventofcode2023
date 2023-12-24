@@ -51,6 +51,8 @@ module Range = struct
     let left = max x a in
     let right = min y b in
     make left (max left right)
+
+  let intersects (x1,y1) (x2,y2) = max x1 x2 <= min y1 y2 
 end
 
 type dir = R | L | U | D [@@deriving show]
@@ -79,3 +81,42 @@ module Grid = struct
   let mem t (j, i) = 0 <= i && i < Array.length t && 0 <= j && j < Array.length t.(i)
   let get t (j, i) = if mem t (j,i) then Some (t.(i).(j)) else None
 end
+
+
+type 'a vertex = {
+  id: 'a;
+  mutable visited: bool;
+  mutable neighbours: 'a vertex list;
+}
+
+let rec get_vertices edges vertices = 
+  let h = List.map 
+  (fun v -> 
+    v,{id = v;
+    visited = false;
+    neighbours = []}) 
+  vertices
+  |> List.to_seq
+  |> Hashtbl.of_seq
+  in
+  let () = Hashtbl.iter (fun v v' -> 
+    v'.neighbours <- (edges v) |> List.map (Hashtbl.find h)
+  ) h
+  in
+  Hashtbl.to_seq_values h |> List.of_seq
+
+
+
+let rec dfs vertex stack =
+  vertex.visited <- true;
+  List.iter (fun neighbor ->
+    if not neighbor.visited then dfs neighbor stack
+  ) vertex.neighbours;
+  stack := vertex.id :: !stack
+
+let topological_sort vertices =
+  let stack = ref [] in
+  List.iter (fun vertex ->
+    if not vertex.visited then dfs vertex stack
+  ) vertices;
+  List.rev !stack
